@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="sz_color_primary">#4664FF</color>
+    <color name="colorPrimaryDark">#FBF8FF</color>
+    <color name="colorPrimary">#515B92</color>
 </resources>
