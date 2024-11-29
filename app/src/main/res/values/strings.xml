@@ -5,4 +5,12 @@
     <string name="sz_your_alarms">Your Alarms</string>
     <string name="sz_add_alarm">Add Alarm</string>
 
+    <string name="sz_alarm_name">Alarm Name</string>
+    <string name="sz_alarm_ringtone">Alarm Ringtone</string>
+    <string name="sz_repeat">Repeat</string>
+    <string name="sz_alarm_volume">Alarm volume</string>
+    <string name="sz_vibrate">Vibrate</string>
+    <string name="sz_enter_your_alarm_name">Enter Your Alarm Name</string>
+    <string name="sz_save">Save</string>
+
 </resources>

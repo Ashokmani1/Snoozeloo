@@ -80,7 +80,7 @@ val Typography = Typography(
     ),
     titleLarge = TextStyle(
         fontFamily = Poppins,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Medium,
         fontSize = 42.sp,
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),

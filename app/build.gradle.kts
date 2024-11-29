@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -34,6 +37,11 @@ android {
     buildFeatures {
         compose = true
     }
+
+    // Allow references to generated code
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -57,4 +65,18 @@ dependencies {
     implementation(libs.androidx.navigation)
 
     implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.material)
+
+    implementation(libs.roomRuntime)
+    ksp(libs.roomCompiler)
+    implementation(libs.roomKtx)
+
+    implementation(libs.hiltAndroid)
+    kapt(libs.hiltAndroidCompiler)
+
+    implementation(libs.hiltNavigationCompose)
+
+    implementation(libs.gson)
+
 }

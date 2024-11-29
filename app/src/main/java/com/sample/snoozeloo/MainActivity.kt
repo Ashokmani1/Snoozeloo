@@ -1,26 +1,57 @@
 package com.sample.snoozeloo
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sample.snoozeloo.model.Alarm
+import com.sample.snoozeloo.ui.NavGraph
 import com.sample.snoozeloo.ui.theme.SnoozelooTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity()
 {
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted)
+        {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                val channel = NotificationChannel("alarm_channel", "Alarm Notifications", NotificationManager.IMPORTANCE_HIGH)
+                notificationManager.createNotificationChannel(channel)
+            }
+        }
+        else
+        {
+            Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -28,13 +59,36 @@ class MainActivity : ComponentActivity()
 
         showSplashScreen()
 
+        isNotificationPermissionGranted()
+
         setContent {
 
             SnoozelooTheme {
 
-                Surface(color = Color.Blue, modifier = Modifier.fillMaxSize()) {
+                Surface(modifier = Modifier.fillMaxSize()) {
 
-                    Navigation()
+                    val navController = rememberNavController()
+
+                    NavGraph(navController = navController, intent.extras)
+                }
+            }
+        }
+    }
+
+
+    private fun isNotificationPermissionGranted()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        {
+            // Check and request notification permission
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                {
+                    requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         }
@@ -57,21 +111,4 @@ class MainActivity : ComponentActivity()
     }
 }
 
-
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun Navigation() {
-
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "main_screen") {
-
-        composable("main_screen") {
-
-            AlarmListScreen(navController)
-        }
-    }
-}
 
