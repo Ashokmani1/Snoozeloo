@@ -47,4 +47,8 @@ Snoozeloo is an alarm clock app designed to provide users with an intuitive, fea
 - UI designs and colors are detailed in the [Snoozeloo mockups](https://www.figma.com/design/t0TlMqJem7LCjALeyQNip2/Snoozeloo?node-id=62-6482&t=Goatlz8jjY3dyocJ-1).
 - Icons are sourced from Material Design or provided SVG files from the mockups.
 
+## Dark Theme
+![Snoozeloo Screenshot](https://github.com/Ashokmani1/Snoozeloo/blob/master/images/Screenshot%202024-12-01%20at%206.41.20%E2%80%AFAM.png)
 
+## Light Theme
+![Snoozeloo Screenshot](https://github.com/Ashokmani1/Snoozeloo/blob/master/images/Screenshot%202024-12-01%20at%206.39.40%E2%80%AFAM.png)
